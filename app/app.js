@@ -9,18 +9,38 @@ var {
     Text
 } = React;
 
+var Home = require('./home/home');
+var Search = require('./search/search');
+var Place = require('./place/place');
+
+
 var NavigationBarRouteMapper = {
-  LeftButton: function() {},
-  RightButton: function() {},
-  Title: function() {
+  LeftButton: function(route, navigator) {
+
+  },
+  RightButton: function(route, navigator) {},
+  Title: function(route, navigator) {
     return (
       <Image 
+        key="logo"
         source={Images.getImage('logo-mobile')} 
         resizeMode="contain"
         style={styles.navTitle}
       />
     )
   }
+}
+
+var RouteStack = {
+    home: {
+      component: Home,
+    },
+    search: {
+      component: Search,
+    },
+    place: {
+      component: Place,
+    }
 }
 
 var App = React.createClass({
@@ -33,19 +53,30 @@ var App = React.createClass({
               )
     },
     renderScene: function(route, navigator) {
+      var Component = route.component;
+      
       return (
-        <View></View>
+        <Component 
+          goToRoute={this.goToRoute}
+          {...route.props}
+        />  
       )
-    },  
+    },
+    getRouteWithProps: function(route, props) {
+        return {
+            ...RouteStack[route],
+            props: props || {}
+        }
+    },
+    goToRoute: function(route, props) {
+      this.refs.navigator.push(this.getRouteWithProps(route, props));
+    },
     render: function() {
         return (
             <View style={styles.container}>
                 <Navigator
-                    initialRoute={
-                      {
-                        name: 'Title'
-                      }
-                    }
+                    ref="navigator"
+                    initialRoute={this.getRouteWithProps('home')}
                     renderScene={this.renderScene}    
                     navigationBar={this.getNavBar()}
                     style={styles.appContainer}
@@ -66,8 +97,14 @@ var styles = StyleSheet.create({
       backgroundColor: '#FFF',
       borderBottomColor: '#AAA',
       borderBottomWidth: 1,
-      height: 52
+      height: 52,
+      shadowColor: 'rgba(120,120,120, .3)',
+      shadowOffset: {width: 4, height: 2},
+      shadowRadius: 5,
+      shadowOpacity: 1
     },
+    //box-shadow: rgba(120, 120, 120, 0.498039) 1px 0px 12px 0px inset;
+
     navTitle: {
       height: 30,
       backgroundColor: 'transparent'
