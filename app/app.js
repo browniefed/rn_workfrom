@@ -23,7 +23,7 @@ var NavigationBarRouteMapper = {
     return (
       <Image 
         key="logo"
-        source={Images.getImage('logo-mobile')} 
+        source={Images.getImage('logomobile')} 
         resizeMode="contain"
         style={styles.navTitle}
       />

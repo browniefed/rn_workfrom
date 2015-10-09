@@ -3,8 +3,8 @@ var Images = {
         switch (name) {
             case 'logo':
                 return require('image!logo');
-            case 'logo-mobile':
-                return require('image!logo-mobile');
+            case 'logomobile':
+                return require('image!logomobile');
         }
     }
 }
