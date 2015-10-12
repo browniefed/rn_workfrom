@@ -16,8 +16,8 @@ var API = {
             page: page || 1
         });
     },
-    getLL: function(lat, lng, radius) {
-        return request.get(BASE_URL + 'places/postal/' + postal).query({
+    getLL: function(ll, radius) {
+        return request.get(BASE_URL + 'places/ll/' + ll).query({
             appid: config.appid,
             radius: radius || 5
         });
