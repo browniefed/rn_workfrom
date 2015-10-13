@@ -51,11 +51,22 @@ var Home = React.createClass({
         value: text
       })
     },
+    searchNearby: function() {
+      navigator.geolocation.getCurrentPosition(
+        (initialPosition) => this.props.goToRoute('search', {
+          map: true,
+          coords: initialPosition.coords,
+          ll: initialPosition.coords.latitude + ', ' + initialPosition.coords.longitude
+        }),
+        (error) => alert(error.message),
+        { timeout: 20000, maximumAge: 1000}
+      );
+    },
     render: function() {
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <TouchableOpacity style={styles.nearbyButton}>
+                    <TouchableOpacity style={styles.nearbyButton} onPress={this.searchNearby}>
                       <View>
                         <Text style={styles.nearbyText}>NearBy</Text>
                       </View>

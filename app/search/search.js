@@ -6,7 +6,8 @@ var Result = require('./result');
 var {
     View,
     StyleSheet,
-    ScrollView
+    ScrollView,
+    MapView
 } = React;
 
 var Search = React.createClass({
@@ -52,9 +53,34 @@ var Search = React.createClass({
     goToRoute: function(data) {
         this.props.goToRoute('place', data);
     },
+    getAnnotations: function() {
+      if (!this.state.results.length) return;
+      return this.state.results.map((result) => {
+        return {
+          latitude: result.latitude,
+          longitude: result.longitude,
+          animateDrop: true,
+          title: result.title,
+          subtitle: result.food
+        }
+      })
+    },
+    getMap: function() {
+      if (!this.props.map) return null;
+
+      return (
+        <MapView
+                  annotations={this.getAnnotations()}
+                  region={{...this.props.coords, latitudeDelta: .05, longitudeDelta: .05}}
+                  style={styles.flexContainer}
+        />
+      )
+    },
     render: function() {
         return (
             <View style={styles.container}>
+                {this.getMap()}
+                
                 <ScrollView style={styles.scrollContainer}>
                   {this.getResults()}
                 </ScrollView>
@@ -72,8 +98,11 @@ var styles = StyleSheet.create({
       paddingLeft: 15,
       paddingRight: 15
     },
-    scrollContainer: {
+    flexContainer: {
       flex: 1,
+    },
+    scrollContainer: {
+      flex: 2
     }
 })
 module.exports = Search;
