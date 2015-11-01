@@ -13,7 +13,7 @@ var PopularAreas = [
     {text: 'New York City', ll: '40.706872, -74.012646'},
     {text: 'Portland', ll: '45.523352, -122.668232'},
     {text: 'London', ll: '51.506666, -0.127851'},
-    {text: 'Auston', ll: '30.266372, -97.742664'},
+    {text: 'Austin', ll: '30.266372, -97.742664'},
     {text: 'Seattle', ll: '47.605202, -122.331501'},
     {text: 'San Francisco', ll: '37.774309, -122.419419'}
 ]

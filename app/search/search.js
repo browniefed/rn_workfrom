@@ -55,10 +55,11 @@ var Search = React.createClass({
     },
     getAnnotations: function() {
       if (!this.state.results.length) return;
+      debugger
       return this.state.results.map((result) => {
         return {
-          latitude: result.latitude,
-          longitude: result.longitude,
+          latitude: parseFloat(result.latitude),
+          longitude: parseFloat(result.longitude),
           animateDrop: true,
           title: result.title,
           subtitle: result.food
