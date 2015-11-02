@@ -6,19 +6,31 @@ var {
     StyleSheet,
     Navigator,
     Image,
-    Text
+    Text,
+    TouchableOpacity
 } = React;
 
 var Home = require('./home/home');
 var Search = require('./search/search');
 var Place = require('./place/place');
-
+var Signup = require('./account/signup');
+var SignupSuccess = require('./account/success');
 
 var NavigationBarRouteMapper = {
   LeftButton: function(route, navigator) {
 
   },
-  RightButton: function(route, navigator) {},
+  RightButton: function(route, navigator) {
+    return (
+      <TouchableOpacity 
+        onPress={() => {
+          navigator.push(getRouteWithProps('signup'))
+        }}
+      >
+        <Text>Sign Up</Text>
+      </TouchableOpacity>
+    )   
+  },
   Title: function(route, navigator) {
     return (
       <Image 
@@ -40,6 +52,19 @@ var RouteStack = {
     },
     place: {
       component: Place,
+    },
+    signup: {
+      component: Signup
+    },
+    signupSuccess: {
+      component: SignupSuccess
+    }
+}
+
+function getRouteWithProps (route, props) {
+    return {
+        ...RouteStack[route],
+        props: props || {}
     }
 }
 
@@ -58,25 +83,24 @@ var App = React.createClass({
       return (
         <Component 
           goToRoute={this.goToRoute}
+          replaceRoute={this.replaceRoute}
           {...route.props}
         />  
       )
     },
-    getRouteWithProps: function(route, props) {
-        return {
-            ...RouteStack[route],
-            props: props || {}
-        }
-    },
+
     goToRoute: function(route, props) {
-      this.refs.navigator.push(this.getRouteWithProps(route, props));
+      this.refs.navigator.push(getRouteWithProps(route, props));
+    },
+    replaceRoute: function(route, props) {
+      this.refs.navigator.replace(getRouteWithProps(route, props));
     },
     render: function() {
         return (
             <View style={styles.container}>
                 <Navigator
                     ref="navigator"
-                    initialRoute={this.getRouteWithProps('home')}
+                    initialRoute={getRouteWithProps('home')}
                     renderScene={this.renderScene}    
                     navigationBar={this.getNavBar()}
                     style={styles.appContainer}
