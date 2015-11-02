@@ -16,10 +16,21 @@ var Search = require('./search/search');
 var Place = require('./place/place');
 var Signup = require('./account/signup');
 var SignupSuccess = require('./account/success');
+var Login = require('./account/login');
+var LoginSuccess = require('./account/loginSuccess');
 
 var NavigationBarRouteMapper = {
   LeftButton: function(route, navigator) {
-
+    return (
+      <TouchableOpacity 
+        style={styles.leftButton}
+        onPress={() => {
+          navigator.push(getRouteWithProps('login'))
+        }}
+      >
+        <Text>Login</Text>
+      </TouchableOpacity>
+    ) 
   },
   RightButton: function(route, navigator) {
     return (
@@ -60,6 +71,12 @@ var RouteStack = {
     },
     signupSuccess: {
       component: SignupSuccess
+    },
+    login: {
+      component: Login
+    },
+    loginSuccess: {
+      compnent: LoginSuccess
     }
 }
 
@@ -157,6 +174,10 @@ var styles = StyleSheet.create({
     navTitle: {
       height: 30,
       backgroundColor: 'transparent'
+    },
+    leftButton: {
+      marginLeft: 10,
+      marginTop: 5
     },
     rightButton: {
       marginRight: 10,

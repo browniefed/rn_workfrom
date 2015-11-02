@@ -3,6 +3,8 @@ var BASE_URL = 'http://api.workfrom.co/'
 var request = require('superagent');
 
 var signup_url = 'https://workfrom.co/join'
+var login_url = 'https://preview.workfrom.co/login'
+var passwordless_url = 'https://preview.workfrom.co/getloginlink';
 
 var API = {
     getPlace: function(slug) {
@@ -45,6 +47,26 @@ var API = {
         'redirect_to': 'https://preview.workfrom.co/login?checkemail=registered'
       }).send({
         'instance': ''
+      }).end(cb);
+    },
+    login: function(email, password, cb) {
+      request.post(login_url).type('form')
+      .send({
+        log: email
+      }).send({
+        pwd: password
+      }).send({
+        action: 'login'
+      }).send({
+        mobile: 'true'
+      }).end(cb);
+    },
+    loginWithEmail: function(email, cb) {
+      request.post(passwordless_url).type('form')
+      .send({
+        'user_login': email
+      }).send({
+        'action': 'lostpassword'
       }).end(cb);
     }
 }
