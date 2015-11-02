@@ -7,7 +7,8 @@ var {
     Navigator,
     Image,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    LinkingIOS
 } = React;
 
 var Home = require('./home/home');
@@ -70,6 +71,29 @@ function getRouteWithProps (route, props) {
 }
 
 var App = React.createClass({
+    componentDidMount: function() {
+      LinkingIOS.addEventListener('url', this._handleOpenURL);
+      var url = LinkingIOS.popInitialURL();
+      if (url) { this._handleOpenURL({url: url}); }
+    },
+    componentWillUnmount: function() {
+      LinkingIOS.removeEventListener('url', this._handleOpenURL);
+    },
+    _handleOpenURL: function(event) {
+      debugger;
+      // var alUrl = new AppLinkURL(event.url)
+      // // work with alUrl.appLinkData. For example render back link to referer app.
+      // var backLink = null;
+      // var refererAL = alUrl.appLink.referer_app_link;
+
+      // // if referer app link was provided we can construct back button with text
+      // if (refererAL) {
+      //   backLink = {
+      //     url: refererAL.url,
+      //     text: 'Back' + refererAL.app_name ? ' to ' + refererAL.app_name : ''
+      //   };
+      // }
+    },
     getNavBar: function() {
         return (
                 <Navigator.NavigationBar
