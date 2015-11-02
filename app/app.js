@@ -23,6 +23,7 @@ var NavigationBarRouteMapper = {
   RightButton: function(route, navigator) {
     return (
       <TouchableOpacity 
+        style={styles.rightButton}
         onPress={() => {
           navigator.push(getRouteWithProps('signup'))
         }}
@@ -132,6 +133,10 @@ var styles = StyleSheet.create({
     navTitle: {
       height: 30,
       backgroundColor: 'transparent'
+    },
+    rightButton: {
+      marginRight: 10,
+      marginTop: 5
     }
 });
 
